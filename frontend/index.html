@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Campaign Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logout-container">
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <h2>Campaign Tracker</h2>
+
+  <div class="form">
+    <input type="text" id="title" placeholder="Campaign Title">
+    <input type="text" id="client" placeholder="Client Name">
+    <input type="date" id="startDate">
+    <button id="addBtn">Add Campaign</button>
+  </div>
+
+  <div id="summary">
+    <div class="summary-box active">Active: <span id="activeCount">0</span></div>
+    <div class="summary-box paused">Paused: <span id="pausedCount">0</span></div>
+    <div class="summary-box completed">Completed: <span id="completedCount">0</span></div>
+  </div>
+
+  <div class="form">
+    <input type="text" id="search" placeholder="Search by title or client name">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Client</th>
+        <th>Start Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="campaignTable"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+  <script>
+    if (!localStorage.getItem("user")) {
+      alert("Please login first!");
+      window.location.href = "login.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
