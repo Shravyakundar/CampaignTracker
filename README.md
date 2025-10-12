@@ -30,30 +30,6 @@ Database
 
 * MongoDB (via Mongoose)
 
-Project Structure
-
-CAMPAIGNTRACKER/
-│
-├── backend/
-│   ├── server.js
-│   ├── models/
-│   │   └── campaign.js
-|   |   └── User.js 
-│   └── routes/
-│       └── campaignRoutes.js
-|       └── authRoutes.js
-│
-├── frontend/
-│   ├── index.html
-│   ├── login.html
-│   ├── signup.html
-│   ├── dashboard.js
-│   ├── style.css
-│   └── script.js
-│
-├── README.md
-└── package.json
-
 How to Run the Project
 
 Prerequisites
