@@ -6,12 +6,10 @@ const bodyParser = require("body-parser");
 const campaignRoutes = require("./routes/campaignRoutes");
 const authRoutes = require("./routes/authRoutes");
 
-
 const app = express();
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 const userRoutes = require("./routes/authRoutes");
-
 
 app.use(cors());
 app.use(express.json());
@@ -20,21 +18,17 @@ app.use(bodyParser.json());
 app.use("/api/campaigns", campaignRoutes);
 app.use("/api/auth", authRoutes);
 
-
-
-mongoose.connect('mongodb://127.0.0.1:27017/campaigndb')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/campaigndb')
   .then(() => console.log(' MongoDB connected'))
   .catch(err => console.error(' MongoDB connection error:', err));
 
-
- const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
 });
 
 const User = mongoose.model("signups", userSchema);
-
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
@@ -49,7 +43,6 @@ app.post("/signup", async (req, res) => {
   res.json({ success: true });
 });
 
-
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
@@ -61,8 +54,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-
 const campaignSchema = new mongoose.Schema({
   title: String,
   client: String,
@@ -71,7 +62,6 @@ const campaignSchema = new mongoose.Schema({
 });
 
 const Campaign = require("./models/Campaign");
-
 
 app.post('/api/campaigns', async (req, res) => {
   try {
@@ -85,7 +75,6 @@ app.post('/api/campaigns', async (req, res) => {
   }
 });
 
-
 app.get('/api/campaigns', async (req, res) => {
   try {
     const campaigns = await Campaign.find();
@@ -95,7 +84,6 @@ app.get('/api/campaigns', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch campaigns' });
   }
 });
-
 
 app.put("/api/campaigns/:id", async (req, res) => {
   try {
@@ -115,8 +103,6 @@ app.put("/api/campaigns/:id", async (req, res) => {
   }
 });
 
-
-
 app.delete('/api/campaigns/:id', async (req, res) => {
   try {
     await Campaign.findByIdAndDelete(req.params.id);
@@ -127,15 +113,8 @@ app.delete('/api/campaigns/:id', async (req, res) => {
   }
 });
 
-
 app.use(express.static(path.join(__dirname, '../frontend')));
-
-
 app.use("/api/campaigns", campaignRoutes);
+app.use("/api/users", userRoutes);
 
-
-app.use("/api/users", userRoutes); 
-
-
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
-app.listen(8081, () => console.log("Server running on port 8081"));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
