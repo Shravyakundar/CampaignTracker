@@ -1,4 +1,4 @@
-console.log("🚀 Dashboard JS loaded");
+console.log(" Dashboard JS loaded");
 const API_URL = 'http://localhost:8081/api/campaigns';
 const form = document.getElementById('campaignForm');
 const list = document.getElementById('campaignList');

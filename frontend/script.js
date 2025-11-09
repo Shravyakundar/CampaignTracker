@@ -5,14 +5,13 @@ const searchInput = document.getElementById('search');
 document.getElementById('addBtn').addEventListener('click', addCampaign);
 searchInput.addEventListener('input', loadCampaigns);
 
-// ✅ Add a new campaign
 async function addCampaign() {
   const title = document.getElementById('title').value.trim();
   const client = document.getElementById('client').value.trim();
   const startDate = document.getElementById('startDate').value;
 
   if (!title || !client || !startDate) {
-    return alert('⚠️ All fields are required');
+    return alert(' All fields are required');
   }
 
   try {
@@ -23,21 +22,21 @@ async function addCampaign() {
     });
 
     if (res.ok) {
-      alert('✅ Campaign added successfully');
+      alert(' Campaign added successfully');
       document.getElementById('title').value = '';
       document.getElementById('client').value = '';
       document.getElementById('startDate').value = '';
       loadCampaigns();
     } else {
-      alert('❌ Failed to add campaign');
+      alert(' Failed to add campaign');
     }
   } catch (error) {
     console.error('Error adding campaign:', error);
-    alert('❌ Error adding campaign');
+    alert(' Error adding campaign');
   }
 }
 
-// ✅ Load all campaigns and update the counts
+
 async function loadCampaigns() {
   try {
     const res = await fetch(API_URL);
@@ -72,17 +71,16 @@ async function loadCampaigns() {
         table.appendChild(row);
       });
 
-    // ✅ Update count boxes dynamically
     document.getElementById('activeCount').innerText = activeCount;
     document.getElementById('pausedCount').innerText = pausedCount;
     document.getElementById('completedCount').innerText = completedCount;
   } catch (error) {
     console.error('Error loading campaigns:', error);
-    alert('❌ Failed to load campaigns');
+    alert(' Failed to load campaigns');
   }
 }
 
-// ✅ Update campaign status
+
 async function updateStatus(id, newStatus) {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
@@ -93,27 +91,26 @@ async function updateStatus(id, newStatus) {
 
     if (!response.ok) throw new Error('Failed');
 
-    alert('✅ Status updated successfully');
-    loadCampaigns(); // ✅ reload list + update counts dynamically
+    alert(' Status updated successfully');
+    loadCampaigns(); 
   } catch (error) {
     console.error('Error updating status:', error);
-    alert('❌ Failed to update status');
+    alert(' Failed to update status');
   }
 }
 
-// ✅ Delete a campaign
 async function deleteCampaign(id) {
-  if (confirm('🗑️ Delete this campaign?')) {
+  if (confirm(' Delete this campaign?')) {
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
       if (res.ok) loadCampaigns();
-      else alert('❌ Failed to delete');
+      else alert(' Failed to delete');
     } catch (error) {
       console.error('Error deleting campaign:', error);
-      alert('❌ Error deleting campaign');
+      alert(' Error deleting campaign');
     }
   }
 }
 
-// ✅ Load campaigns on page load
+
 loadCampaigns();

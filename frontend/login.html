@@ -31,7 +31,7 @@
 
       if (data.success) {
         alert("Login successful!");
-        localStorage.setItem("user", JSON.stringify(data.user)); // store logged-in user
+        localStorage.setItem("user", JSON.stringify(data.user)); 
         window.location.href = "index.html";
       } else {
         alert("Invalid email or password!");
